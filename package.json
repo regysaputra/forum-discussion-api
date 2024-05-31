@@ -4,7 +4,17 @@
 	"description": "RESTful API for forum discussion app",
 	"main": "api/index.js",
 	"scripts": {
-		"test": "jest --setupFiles dotenv/config -i"
+		"migrate:prod": "node-pg-migrate --envPath .env",
+		"migrate:dev": "node-pg-migrate --envPath .development.env",
+		"migrate:test": "node-pg-migrate --envPath .test.env",
+		"test": "jest --setupFiles dotenv/config -i",
+		"start": "cross-env NODE_ENV=production node api/index.js",
+		"start:dev": "cross-env NODE_ENV=development nodemon src/app.js",
+		"test:watch": "jest --watchAll --coverage --setupFiles dotenv/config -i",
+		"test:applications": "jest --setupFiles dotenv/config --testPathPattern=src/Applications/ -i",
+		"test:commons": "jest --setupFiles dotenv/config --testPathPattern=src/Commons/ -i",
+		"test:domains": "jest --setupFiles dotenv/config --testPathPattern=src/Domains/ -i",
+		"test:infrastructures": "jest --runInBand --setupFiles dotenv/config --testPathPattern=src/Infrastructures/ -i"
 	},
 	"repository": {
 		"type": "git",
