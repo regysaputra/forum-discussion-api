@@ -19,7 +19,8 @@ const options = {
 };
 
 const specs = swaggerJSDoc(options);
+const styling = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui.min.css";
 
 module.exports = (app) => {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, { customCssUrl: styling }));
 };
