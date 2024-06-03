@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-const pool = require('../api/Infrastructures/database/postgres/pool');
+const pool = require('../src/Infrastructures/database/postgres/pool');
 
 const AuthenticationsTableTestHelper = {
   async addToken(token) {
