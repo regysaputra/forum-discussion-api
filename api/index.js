@@ -10,8 +10,8 @@ if (process.env.NODE_ENV === 'development') {
 
 require('dotenv').config({ path });
 const swagger = require("../swagger");
-const config = require("./Commons/config");
-const app = require("./Infrastructures/http/app");
+const config = require("../src/Commons/config");
+const app = require("../src/Infrastructures/http/app");
 
 const host = config.app.host;
 const port = Number(config.app.port);
