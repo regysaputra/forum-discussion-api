@@ -1,0 +1,19 @@
+type: array
+items:
+  type: object
+  properties:
+    id:
+      type: string
+      description: The id of your thread
+    title:
+      type: string
+      description: The title of your thread
+    body:
+      type: string
+      description: The body of your body
+    date:
+      type: string
+      description: The date of last created/updated your thread
+    username:
+      type: string
+      description: The username of your thread

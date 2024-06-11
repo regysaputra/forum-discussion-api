@@ -1,0 +1,377 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Forum API",
+    "version": "1.0.0",
+    "description": "RESTful API for discussion forum app"
+  },
+  "server": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "Development Server"
+    },
+    {
+      "url": "http://forum-discussion-api.vercel.app/",
+      "description": "Production Server"
+    }
+  ],
+  "paths": {
+    "/authentications": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login",
+        "description": "Get access token and refresh token",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Login user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/LoginUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string"
+                        },
+                        "refreshToken": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "accessToken": "access_token",
+                    "refreshToken": "refresh_token"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Add new user",
+        "description": "Add new user",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Register user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/RegisterUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "addedUser": {
+                          "$ref": "#/components/RegisteredUser"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "addedUser": {
+                      "id": "user-123",
+                      "username": "regysaputra",
+                      "fullname": "Regy Saputra"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads": {
+      "get": {
+        "tags": [
+          "Thread"
+        ],
+        "summary": "Get all thread",
+        "description": "Get all thread",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Threads retrieve successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "threads": {
+                          "$ref": "#/components/AllThread"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "threads": [
+                      {
+                        "id": "thread-123",
+                        "title": "sebuah thread",
+                        "body": "sebuah body thread",
+                        "date": "2021-08-08T07:19:1",
+                        "username": "regysaputra"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Thread"
+        ],
+        "summary": "Add new thread",
+        "description": "Add new thread",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "New thread object",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/AddThread"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Thread added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "addedUser": {
+                          "$ref": "#/components/AddedThread"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "addedThread": {
+                      "id": "thread-123",
+                      "title": "Thread Title",
+                      "owner": "user-123"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "UnauthorizedError": {
+            "description": "Access token is missing or invalid"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "description": "Enter the token with the Bearer prefix, e.g. \"Bearer MJyde36e8\"",
+        "type": "apiKey",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "AddThread": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title of the thread"
+        },
+        "body": {
+          "type": "string",
+          "description": "The body of the thread"
+        }
+      }
+    },
+    "AddedThread": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id of the thread"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the thread"
+        },
+        "owner": {
+          "type": "string",
+          "description": "The owner of the thread"
+        }
+      }
+    },
+    "AllThread": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of your thread"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of your thread"
+          },
+          "body": {
+            "type": "string",
+            "description": "The body of your body"
+          },
+          "date": {
+            "type": "string",
+            "description": "The date of last created/updated your thread"
+          },
+          "username": {
+            "type": "string",
+            "description": "The username of your thread"
+          }
+        }
+      }
+    },
+    "LoginUser": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "The username of user"
+        },
+        "password": {
+          "type": "string",
+          "description": "The pasword of user"
+        }
+      }
+    },
+    "RegisterUser": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "The username of user"
+        },
+        "password": {
+          "type": "string",
+          "description": "The pasword of user"
+        },
+        "fullname": {
+          "type": "string",
+          "description": "The fullname of user"
+        }
+      }
+    },
+    "RegisteredUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id of user"
+        },
+        "username": {
+          "type": "string",
+          "description": "The username of user"
+        },
+        "fullname": {
+          "type": "string",
+          "description": "The fullname of user"
+        }
+      }
+    }
+  }
+}

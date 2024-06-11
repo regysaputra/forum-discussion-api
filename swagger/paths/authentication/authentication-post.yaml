@@ -1,0 +1,37 @@
+tags:
+  - Authentication
+summary: Login
+description: Get access token and refresh token
+produces:
+  - application/json
+consumes:
+  - application/json
+parameters:
+  - in: body
+    name: body
+    description: Login user object
+    required: true
+    schema:
+      $ref: ../../components/LoginUser.yaml
+responses:
+  200:
+    description: Login successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                refreshToken:
+                  type: string
+        example:
+          status: success
+          data:
+            accessToken: access_token
+            refreshToken: refresh_token

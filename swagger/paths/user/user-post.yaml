@@ -1,0 +1,37 @@
+tags:
+  - User
+summary: Add new user
+description: Add new user
+produces:
+  - application/json
+consumes:
+  - application/json
+parameters:
+  - in: body
+    name: body
+    description: Register user object
+    required: true
+    schema:
+      $ref: ../../components/RegisterUser.yaml
+responses:
+  201:
+    description: User added successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+            data:
+              type: object
+              properties:
+                addedUser:
+                  $ref: ../../components/RegisteredUser.yaml
+        example:
+          status: success
+          data:
+            addedUser:
+              id: user-123
+              username: regysaputra
+              fullname: Regy Saputra

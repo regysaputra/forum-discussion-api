@@ -1,0 +1,11 @@
+/authentications:
+  post:
+    $ref: ./authentication/authentication-post.yaml
+/users:
+  post:
+    $ref: ./user/user-post.yaml
+/threads:
+  get:
+    $ref: ./thread/thread-get.yaml
+  post:
+    $ref: ./thread/thread-post.yaml

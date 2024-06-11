@@ -1,3 +1,21 @@
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    RegisterUser:
+ *      type: object
+ *      properties:
+ *        username:
+ *          type: string
+ *          description: The username of user
+ *        password:
+ *          type: string
+ *          description: The pasword of user
+ *        fullname:
+ *          type: string
+ *          description: The fullname of user
+ */
+
 class RegisterUser {
   constructor(payload) {
     if (payload === null) {

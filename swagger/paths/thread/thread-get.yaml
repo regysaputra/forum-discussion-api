@@ -1,0 +1,30 @@
+tags:
+  - Thread
+summary: Get all thread
+description: Get all thread
+produces:
+  - application/json
+responses:
+  200:
+    description: Threads retrieve successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+            data:
+              type: object
+              properties:
+                threads:
+                  $ref: ../../components/AllThread.yaml
+        example:
+          status: success
+          data:
+            threads:
+              - id: thread-123
+                title: sebuah thread 
+                body: sebuah body thread
+                date: 2021-08-08T07:19:1
+                username: regysaputra

@@ -1,0 +1,20 @@
+securitySchemes:
+  bearerAuth:
+    description: Enter the token with the Bearer prefix, e.g. "Bearer MJyde36e8"
+    type: apiKey
+    scheme: bearer
+    bearerFormat: JWT
+    name: Authorization
+    in: header
+AddThread:
+  $ref: ./AddThread.yaml
+AddedThread:
+  $ref: ./AddedThread.yaml
+AllThread:
+  $ref: ./AllThread.yaml
+LoginUser:
+  $ref: ./LoginUser.yaml
+RegisterUser:
+  $ref: ./RegisterUser.yaml
+RegisteredUser:
+  $ref: ./RegisteredUser.yaml

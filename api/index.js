@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 require('dotenv').config({ path });
-const swagger = require("../swagger");
+const swagger = require("../swagger/swagger");
 const config = require("../src/Commons/config");
 const app = require("../src/Infrastructures/http/app");
 

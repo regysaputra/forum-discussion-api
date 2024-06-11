@@ -1,0 +1,11 @@
+type: object
+properties:
+  id:
+    type: string
+    description: The id of user
+  username:
+    type: string
+    description: The username of user
+  fullname:
+    type: string
+    description: The fullname of user

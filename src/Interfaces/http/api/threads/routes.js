@@ -1,5 +1,4 @@
 /**
- * @swagger
  * /threads:
  *  get:
  *    summary: Get all thread.
@@ -10,9 +9,11 @@
  */
 
 const express = require("express");
-const getAllThreadHandler = require("./handler");
 const router = express.Router();
-
+const authenticateToken = require("../../../../Infrastructures/middleware/authenticateToken");
+const { getAllThreadHandler, postThreadHandler } = require("./handler");
+ 
 router.get("/", getAllThreadHandler);
+router.post("/", authenticateToken, postThreadHandler);
 
 module.exports = router;

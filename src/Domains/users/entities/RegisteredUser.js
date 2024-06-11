@@ -1,3 +1,21 @@
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    RegisterUser:
+ *      type: object
+ *      properties:
+ *        id:
+ *          type: string
+ *          description: The id of registered user
+ *        username:
+ *          type: string
+ *          description: The username of registered user
+ *        fullname:
+ *          type: string
+ *          description: The fullname of registered user
+ */
+
 class RegisteredUser {
   constructor(payload) {
     this.#verifyPayload(payload);

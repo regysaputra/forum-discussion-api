@@ -1,0 +1,14 @@
+openapi: "3.0.0"
+info:
+  title: "Forum API"
+  version: "1.0.0"
+  description: "RESTful API for discussion forum app"
+server:
+  - url: http://localhost:3000/
+    description: Development Server
+  - url: http://forum-discussion-api.vercel.app/
+    description: Production Server
+paths:
+  $ref: ./paths/index.yaml
+components:
+  $ref: ./components/index.yaml

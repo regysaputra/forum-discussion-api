@@ -1,0 +1,41 @@
+tags:
+  - Thread
+summary: Add new thread
+description: Add new thread
+produces:
+  - application/json
+consumes:
+  - application/json
+parameters:
+  - in: body
+    name: body
+    description: New thread object
+    required: true
+    schema:
+      $ref: ../../components/AddThread.yaml
+security:
+  - bearerAuth: []
+responses:
+  201:
+    description: Thread added successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+            data:
+              type: object
+              properties:
+                addedUser:
+                  $ref: ../../components/AddedThread.yaml
+        example:
+          status: success
+          data:
+            addedThread:
+              id: thread-123
+              title: Thread Title
+              owner: user-123
+  UnauthorizedError:
+    description: Access token is missing or invalid

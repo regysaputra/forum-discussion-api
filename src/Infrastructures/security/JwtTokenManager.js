@@ -11,18 +11,17 @@ class JwtTokenManager extends AuthenticationTokenManager {
   }
 
   async createAccessToken(payload) {
-    return this.#jwt.generate(payload, config.security.accessTokenKey, { ttlSec: 7200 });
+    return this.#jwt.sign(payload, config.security.accessTokenKey, { expiresIn: "12h" });
   }
 
   async createRefreshToken(payload) {
-    return this.#jwt.generate(payload, config.security.refreshTokenKey, { ttlSec: 86400 });
+    return this.#jwt.sign(payload, config.security.refreshTokenKey, { expiresIn: "24h" });
   }
 
   // @ts-ignore
   async verifyAccessToken(token) {
     try {
-      const artifacts = this.#jwt.decode(token);
-      this.#jwt.verify(artifacts, config.security.accessTokenKey);
+      const decoded = this.#jwt.verify(token, config.security.accessTokenKey);
 
       return true;
     } catch (error) {
@@ -32,8 +31,7 @@ class JwtTokenManager extends AuthenticationTokenManager {
 
   async verifyRefreshToken(token) {
     try {
-      const artifacts = this.#jwt.decode(token);
-      this.#jwt.verify(artifacts, config.security.refreshTokenKey);
+      this.#jwt.verify(token, config.security.refreshTokenKey);
     } catch (error) {
       throw new InvariantError('refresh token tidak valid');
     }
@@ -41,8 +39,8 @@ class JwtTokenManager extends AuthenticationTokenManager {
 
   async decodePayload(token) {
     try {
-      const artifacts = this.#jwt.decode(token);
-      return artifacts.decoded.payload;
+      const artifacts = this.#jwt.verify(token, config.security.accessTokenKey);
+      return artifacts;
     } catch (error) {
       throw new InvariantError('Token tidak bisa di decode');
     }
