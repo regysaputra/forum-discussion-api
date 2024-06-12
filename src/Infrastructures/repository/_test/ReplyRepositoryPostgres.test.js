@@ -143,7 +143,7 @@ describe('ReplyRepositoryPostgres', () => {
       expect(replies[0].reply_id).toEqual('reply-123');
       expect(replies[0].reply_content).toEqual('sebuah balasan');
       expect(typeof replies[0].reply_date).toEqual('object');
-      expect(replies[0].user_username).toEqual('dicoding');
+      expect(replies[0].user_username).toEqual('regysaputra');
       expect(typeof replies[0].reply_is_delete).toEqual('boolean');
     }, 20000);
   });
@@ -164,5 +164,22 @@ describe('ReplyRepositoryPostgres', () => {
       // Assert
       expect(reply[0].reply_is_delete).toEqual(true);
     }, 20000);
+  });
+
+  describe('getTotalReplyByCommentId', () => {
+    it('should return total reply', async () => {
+      // Arrange
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
+      await UsersTableTestHelper.addUser({});
+      await ThreadsTableTestHelper.addThread({});
+      await CommentsTableTestHelper.addComment({});
+      await RepliesTabletestHelper.addReplies({});
+
+      // Action
+      const totalReply = await replyRepositoryPostgres.getTotalReplyByCommentId('comment-123');
+
+      // Assert
+      expect(totalReply).toEqual('1');
+    }, 10000);
   });
 });

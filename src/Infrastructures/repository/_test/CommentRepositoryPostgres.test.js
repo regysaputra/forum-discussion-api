@@ -177,7 +177,7 @@ describe('CommentRepositoryPostgres', () => {
       expect(comments[0].comment_id).toEqual('comment-123');
       expect(comments[0].comment_content).toEqual('sebuah komentar');
       expect(typeof comments[0].comment_date).toEqual('object');
-      expect(comments[0].user_username).toEqual('dicoding');
+      expect(comments[0].user_username).toEqual('regysaputra');
       expect(typeof comments[0].comment_is_delete).toEqual('boolean');
     }, 20000);
   });

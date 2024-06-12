@@ -9,3 +9,6 @@
     $ref: ./thread/thread-get.yaml
   post:
     $ref: ./thread/thread-post.yaml
+/threads/:threadId/comments:
+  post:
+    $ref: ./comment/comment-post.yaml

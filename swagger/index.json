@@ -178,7 +178,8 @@
                         "title": "sebuah thread",
                         "body": "sebuah body thread",
                         "date": "2021-08-08T07:19:1",
-                        "username": "regysaputra"
+                        "username": "regysaputra",
+                        "total_discussion": 2
                       }
                     ]
                   }
@@ -230,7 +231,7 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "addedUser": {
+                        "addedThread": {
                           "$ref": "#/components/AddedThread"
                         }
                       }
@@ -249,9 +250,72 @@
                 }
               }
             }
-          },
-          "UnauthorizedError": {
-            "description": "Access token is missing or invalid"
+          }
+        }
+      }
+    },
+    "/threads/:threadId/comments": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Add new comment",
+        "description": "Add new comment",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "New comment object",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/AddComment"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Comment added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "addedComment": {
+                          "$ref": "#/components/AddedComment"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "addedComment": {
+                      "id": "comment-123",
+                      "content": "my comment",
+                      "owner": "user-123"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -298,6 +362,32 @@
         }
       }
     },
+    "AddComment": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The content of the comment"
+        }
+      }
+    },
+    "AddedComment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id of the comment"
+        },
+        "content": {
+          "type": "string",
+          "description": "The content of the comment"
+        },
+        "owner": {
+          "type": "string",
+          "description": "The owner of the comment"
+        }
+      }
+    },
     "AllThread": {
       "type": "array",
       "items": {
@@ -322,6 +412,10 @@
           "username": {
             "type": "string",
             "description": "The username of your thread"
+          },
+          "total_discussion": {
+            "type": "number",
+            "description": "The total comment and reply"
           }
         }
       }

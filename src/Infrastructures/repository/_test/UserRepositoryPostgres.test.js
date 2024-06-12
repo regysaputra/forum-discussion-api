@@ -18,11 +18,11 @@ describe('UserRepositoryPostgres', () => {
   describe('verifyAvailableUsername function', () => {
     it('should throw InvariantError when username not available', async () => {
       // Arrange
-      await UsersTableTestHelper.addUser({ username: 'dicoding' }); // memasukan user baru dengan username dicoding
+      await UsersTableTestHelper.addUser({ username: 'regysaputra' }); // memasukan user baru dengan username regysaputra
       const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
 
       // Action & Assert
-      await expect(userRepositoryPostgres.verifyAvailableUsername('dicoding')).rejects.toThrow(InvariantError);
+      await expect(userRepositoryPostgres.verifyAvailableUsername('regysaputra')).rejects.toThrow(InvariantError);
     }, 20000);
 
     it('should not throw InvariantError when username available ', async () => {
@@ -30,7 +30,7 @@ describe('UserRepositoryPostgres', () => {
       const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
 
       // Action & Assert
-      await expect(userRepositoryPostgres.verifyAvailableUsername('dicoding')).resolves.not.toThrow(InvariantError);
+      await expect(userRepositoryPostgres.verifyAvailableUsername('regysaputra')).resolves.not.toThrow(InvariantError);
     }, 20000);
   });
 
@@ -38,7 +38,7 @@ describe('UserRepositoryPostgres', () => {
     it('should throw ServerError when error occurs from database', async () => {
       // Arrange
       const registerUser = new RegisterUser({
-        username: 'dicoding',
+        username: 'regysaputra',
         password: '12345678',
         fullname: 'Dicoding Indonesia',
       });
@@ -55,7 +55,7 @@ describe('UserRepositoryPostgres', () => {
     it('should persist register user', async () => {
       // Arrange
       const registerUser = new RegisterUser({
-        username: 'dicoding',
+        username: 'regysaputra',
         password: '12345678',
         fullname: 'Dicoding Indonesia',
       });
@@ -73,7 +73,7 @@ describe('UserRepositoryPostgres', () => {
     it('should return registered user correctly', async () => {
       // Arrange
       const registerUser = new RegisterUser({
-        username: 'dicoding',
+        username: 'regysaputra',
         password: '12345678',
         fullname: 'Dicoding Indonesia',
       });
@@ -86,7 +86,7 @@ describe('UserRepositoryPostgres', () => {
       // Assert
       expect(registeredUser).toStrictEqual(new RegisteredUser({
         id: 'user-123',
-        username: 'dicoding',
+        username: 'regysaputra',
         fullname: 'Dicoding Indonesia',
       }));
     }, 20000);
@@ -107,12 +107,12 @@ describe('UserRepositoryPostgres', () => {
       // Arrange
       const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
       await UsersTableTestHelper.addUser({
-        username: 'dicoding',
+        username: 'regysaputra',
         password: 'secret_password',
       });
 
       // Action
-      const password = await userRepositoryPostgres.getPasswordByUsername('dicoding');
+      const password = await userRepositoryPostgres.getPasswordByUsername('regysaputra');
 
       // Assert
       expect(password).toBe('secret_password');
@@ -125,18 +125,18 @@ describe('UserRepositoryPostgres', () => {
       const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
 
       // Action & Assert
-      await expect(userRepositoryPostgres.getIdByUsername('dicoding'))
+      await expect(userRepositoryPostgres.getIdByUsername('regysaputra'))
         .rejects
         .toThrow(InvariantError);
     }, 20000);
 
     it('should return user id correctly', async () => {
       // Arrange
-      await UsersTableTestHelper.addUser({ id: 'user-321', username: 'dicoding' });
+      await UsersTableTestHelper.addUser({ id: 'user-321', username: 'regysaputra' });
       const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
 
       // Action
-      const userId = await userRepositoryPostgres.getIdByUsername('dicoding');
+      const userId = await userRepositoryPostgres.getIdByUsername('regysaputra');
 
       // Assert
       expect(userId).toEqual('user-321');

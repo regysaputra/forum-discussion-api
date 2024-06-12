@@ -17,3 +17,6 @@ items:
     username:
       type: string
       description: The username of your thread
+    total_discussion:
+      type: number
+      description: The total comment and reply

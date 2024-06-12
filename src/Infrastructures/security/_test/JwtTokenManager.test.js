@@ -6,7 +6,7 @@ describe('JwtTokenManager', () => {
     it('should create accessToken correctly', async () => {
       // Arrange
       const payload = {
-        username: 'dicoding',
+        username: 'regysaputra',
       };
       const mockJwtToken = {
         generate: jest.fn().mockImplementation(() => 'mock_token'),

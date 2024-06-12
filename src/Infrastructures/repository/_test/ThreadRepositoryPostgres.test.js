@@ -132,7 +132,7 @@ describe('ThreadRepositoryPostgres', () => {
       expect(thread.thread_title).toEqual('sebuah thread');
       expect(thread.thread_body).toEqual('sebuah body thread');
       expect(typeof thread.thread_date).toEqual('object');
-      expect(thread.user_username).toEqual('dicoding');
+      expect(thread.user_username).toEqual('regysaputra');
     }, 20000);
   });
 
@@ -152,7 +152,7 @@ describe('ThreadRepositoryPostgres', () => {
       expect(threads[0].thread_title).toEqual('sebuah thread');
       expect(threads[0].thread_body).toEqual('sebuah body thread');
       expect(typeof threads[0].thread_date).toEqual('object');
-      expect(threads[0].user_username).toEqual('dicoding');
+      expect(threads[0].user_username).toEqual('regysaputra');
     }, 20000)
   })
 });

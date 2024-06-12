@@ -1,5 +1,6 @@
 const AddThreadUseCase = require("../../../../Applications/use_case/AddThreadUseCase");
 const GetAllThreadUseCase = require("../../../../Applications/use_case/GetAllThreadUseCase");
+const GetThreadUseCase = require("../../../../Applications/use_case/GetThreadUseCase");
 const container = require("../../../../Infrastructures/container");
 
 async function getAllThreadHandler(req, res, next) {
@@ -12,6 +13,23 @@ async function getAllThreadHandler(req, res, next) {
       status: 'success',
       data: {
         threads,
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getThreadHandler(req, res, next) {
+  const getThreadUseCase = container.getInstance(GetThreadUseCase.name);
+  
+  try {
+    const thread = await getThreadUseCase.execute(req.params.threadId);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        thread,
       }
     });
   } catch (error) {
@@ -38,5 +56,6 @@ async function postThreadHandler(req, res, next) {
 
 module.exports = {
   getAllThreadHandler: getAllThreadHandler,
+  getThreadHandler: getThreadHandler,
   postThreadHandler: postThreadHandler
 };

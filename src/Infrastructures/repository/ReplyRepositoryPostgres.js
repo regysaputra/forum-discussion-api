@@ -72,6 +72,18 @@ class ReplyRepositoryPostgres extends ReplyRepository {
 
     await this.#pool.query(query);
   }
+
+  async getTotalReplyByCommentId(commentId) {
+    const query = {
+      text: 'SELECT COUNT(reply_id) FROM replies WHERE fk_comment_id = $1',
+      values: [commentId]
+    };
+
+    const totalReply = await this.#pool.query(query);
+    console.log('total reply :', totalReply);
+
+    return totalReply.rows[0].count;
+  }
 }
 
 module.exports = ReplyRepositoryPostgres;

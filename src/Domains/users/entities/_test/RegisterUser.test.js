@@ -40,7 +40,7 @@ describe('a RegisterUser entities', () => {
     // Arrange
     const payload = {
       username: 'dico ding',
-      fullname: 'dicoding',
+      fullname: 'regysaputra',
       password: 'abc',
     };
 

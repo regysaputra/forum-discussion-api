@@ -10,7 +10,7 @@ describe("/users endpoint", () => {
 
   afterEach(async () => {
     await UsersTableTestHelper.cleanTable();
-  }, 10000);
+  }, 20000);
 
   describe("when POST /users", () => {
     it("should response 400 when request payload not contain needed property", async () => {

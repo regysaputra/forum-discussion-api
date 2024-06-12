@@ -16,7 +16,7 @@ describe('a RegisteredUser entities', () => {
     // Arrange
     const payload = {
       id: 123,
-      username: 'dicoding',
+      username: 'regysaputra',
       fullname: 'Dicoding Indonesia',
     };
 
@@ -28,7 +28,7 @@ describe('a RegisteredUser entities', () => {
     // Arrange
     const payload = {
       id: 'user-123',
-      username: 'dicoding',
+      username: 'regysaputra',
       fullname: 'Dicoding Indonesia',
     };
 

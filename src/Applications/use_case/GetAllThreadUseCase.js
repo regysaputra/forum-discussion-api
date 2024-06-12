@@ -1,26 +1,42 @@
 class GetAllThreadUseCase {
   #threadRepository;
+
+  #commentRepository;
+
+  #replyRepository;
   
-  constructor({ threadRepository }) {
+  constructor({ threadRepository, commentRepository, replyRepository }) {
     this.#threadRepository = threadRepository;
+    this.#commentRepository = commentRepository;
+    this.#replyRepository = replyRepository;
   }
 
   async #transform(threads) {
     const results = [];
 
-    threads.forEach(thread => {
+    for(const thread of threads) {
       const {
-        thread_id: id,
-        thread_title: title,
-        thread_body: body,
-        thread_date: date,
-        user_username: username,
+        thread_id,
+        thread_title,
+        thread_body,
+        thread_date,
+        user_username
       } = thread;
 
+      let totalDiscussion = 0;
+      const comments = await this.#commentRepository.getCommentsByThreadId(thread_id);
+      totalDiscussion += comments.length;
+      
+      for (const comment of comments) {
+        const totalReply = await this.#replyRepository.getTotalReplyByCommentId(comment.comment_id);
+
+        totalDiscussion += Number(totalReply);
+      }
+
       results.push({
-        id, title, body, date, username
+        id: thread_id, title: thread_title, body: thread_body, date: thread_date, username: user_username, total_discussion: totalDiscussion
       });
-    });
+    }
 
     return results;
   }

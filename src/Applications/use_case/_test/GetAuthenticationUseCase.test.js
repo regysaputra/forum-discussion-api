@@ -10,7 +10,7 @@ describe('GetAuthenticationUseCase', () => {
   it('should orchestrating the get authentication action correctly', async () => {
     // Arrange
     const useCasePayload = {
-      username: 'dicoding',
+      username: 'regysaputra',
       password: 'plain',
     };
 
@@ -55,11 +55,11 @@ describe('GetAuthenticationUseCase', () => {
       accessToken: 'access_token',
       refreshToken: 'refresh_token',
     }));
-    expect(mockUserRepository.getPasswordByUsername).toHaveBeenCalledWith('dicoding');
+    expect(mockUserRepository.getPasswordByUsername).toHaveBeenCalledWith('regysaputra');
     expect(mockPasswordHash.comparePassword).toHaveBeenCalledWith('plain', 'encrypted_password');
-    expect(mockUserRepository.getIdByUsername).toHaveBeenCalledWith('dicoding');
-    expect(mockAuthenticationTokenManager.createAccessToken).toHaveBeenCalledWith({ username: 'dicoding', id: 'user-123' });
-    expect(mockAuthenticationTokenManager.createRefreshToken).toHaveBeenCalledWith({ username: 'dicoding', id: 'user-123' });
+    expect(mockUserRepository.getIdByUsername).toHaveBeenCalledWith('regysaputra');
+    expect(mockAuthenticationTokenManager.createAccessToken).toHaveBeenCalledWith({ username: 'regysaputra', id: 'user-123' });
+    expect(mockAuthenticationTokenManager.createRefreshToken).toHaveBeenCalledWith({ username: 'regysaputra', id: 'user-123' });
     expect(mockAuthenticationRepository.addToken).toHaveBeenCalledWith(mockedAuthentication.refreshToken);
   });
 });

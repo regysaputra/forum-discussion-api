@@ -1,7 +1,7 @@
 tags:
-  - Thread
-summary: Add new thread
-description: Add new thread
+  - Comment
+summary: Add new comment
+description: Add new comment
 produces:
   - application/json
 consumes:
@@ -9,15 +9,15 @@ consumes:
 parameters:
   - in: body
     name: body
-    description: New thread object
+    description: New comment object
     required: true
     schema:
-      $ref: ../../components/AddThread.yaml
+      $ref: ../../components/AddComment.yaml
 security:
   - bearerAuth: []
 responses:
   201:
-    description: Thread added successfully
+    description: Comment added successfully
     content:
       application/json:
         schema:
@@ -28,12 +28,12 @@ responses:
             data:
               type: object
               properties:
-                addedThread:
-                  $ref: ../../components/AddedThread.yaml
+                addedComment:
+                  $ref: ../../components/AddedComment.yaml
         example:
           status: success
           data:
-            addedThread:
-              id: thread-123
-              title: Thread Title
+            addedComment:
+              id: comment-123
+              content: my comment
               owner: user-123
