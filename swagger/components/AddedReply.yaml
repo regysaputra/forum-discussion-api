@@ -1,0 +1,11 @@
+type: object
+properties:
+  id:
+    type: string
+    description: The id of the reply
+  content:
+    type: string
+    description: The content of the reply
+  owner:
+    type: string
+    description: The owner of the reply

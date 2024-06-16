@@ -19,7 +19,7 @@ describe("/users endpoint", () => {
         fullname: "Regy Saputra",
         password: "12345"
       };
-
+ 
       // Action
       const response = await request(app).post("/users").send(requestPayload);
 

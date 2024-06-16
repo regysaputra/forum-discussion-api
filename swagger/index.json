@@ -269,6 +269,15 @@
         ],
         "parameters": [
           {
+            "in": "path",
+            "name": "threadId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ID of the thread to get"
+          },
+          {
             "in": "body",
             "name": "body",
             "description": "New comment object",
@@ -310,6 +319,110 @@
                     "addedComment": {
                       "id": "comment-123",
                       "content": "my comment",
+                      "owner": "user-123"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/:threadId/comments/:commentId/replies": {
+      "post": {
+        "tags": [
+          "Reply"
+        ],
+        "summary": "Add new reply",
+        "description": "Add new reply",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "threadId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ID of the thread to get"
+          },
+          {
+            "in": "path",
+            "name": "commentId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ID of the comment to get"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "New reply object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "description": "The content of the reply"
+                }
+              }
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Reply added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "addedComment": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "The id of the reply"
+                            },
+                            "content": {
+                              "type": "string",
+                              "description": "The content of the reply"
+                            },
+                            "owner": {
+                              "type": "string",
+                              "description": "The owner of the reply"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "addedReply": {
+                      "id": "reply-123",
+                      "content": "my reply",
                       "owner": "user-123"
                     }
                   }

@@ -57,6 +57,29 @@ describe("comments endpoint", () => {
       expect(responseJson.message).toEqual('Missing authentication');
     }, 10000);
 
+    it('should response 404 when thread is not found', async () => {
+      // Arrange
+      const requestPayload = {
+        content: 'reply',
+      };
+
+      await UsersTableTestHelper.addUser({});
+      await ThreadsTableTestHelper.addThread({});
+      const accessToken = await container.getInstance(AuthenticationTokenManager.name).createAccessToken({ username: 'regysaputra', password: '12345' });
+
+      // Action
+      const response = await request(app)
+        .post("/threads/thread-100/comments")
+        .send(requestPayload)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      // Assert
+      const responseJson = JSON.parse(response.text);
+      expect(response.statusCode).toEqual(404);
+      expect(responseJson.status).toEqual('fail');
+      expect(responseJson.message).toEqual('Thread tidak ditemukan');
+    }, 20000);
+
     it('should response 400 when request payload not contain needed property', async () => {
       // Arrange
       const requestPayload = {};

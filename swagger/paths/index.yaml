@@ -12,3 +12,6 @@
 /threads/:threadId/comments:
   post:
     $ref: ./comment/comment-post.yaml
+/threads/:threadId/comments/:commentId/replies:
+  post:
+    $ref: ./reply/reply-post.yaml

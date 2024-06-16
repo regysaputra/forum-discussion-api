@@ -1,7 +1,7 @@
 tags:
-  - Comment
-summary: Add new comment
-description: Add new comment
+  - Reply
+summary: Add new reply
+description: Add new reply
 produces:
   - application/json
 consumes:
@@ -13,17 +13,23 @@ parameters:
       type: string
     required: true
     description: ID of the thread to get
+  - in: path
+    name: commentId
+    schema:
+      type: string
+    required: true
+    description: ID of the comment to get
   - in: body
     name: body
-    description: New comment object
+    description: New reply object
     required: true
     schema:
-      $ref: ../../components/AddComment.yaml
+      $ref: ../../components/AddReply.yaml
 security:
   - bearerAuth: []
 responses:
   201:
-    description: Comment added successfully
+    description: Reply added successfully
     content:
       application/json:
         schema:
@@ -35,11 +41,11 @@ responses:
               type: object
               properties:
                 addedComment:
-                  $ref: ../../components/AddedComment.yaml
+                  $ref: ../../components/AddedReply.yaml
         example:
           status: success
           data:
-            addedComment:
-              id: comment-123
-              content: my comment
+            addedReply:
+              id: reply-123
+              content: my reply
               owner: user-123
