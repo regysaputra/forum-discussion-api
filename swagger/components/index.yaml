@@ -16,6 +16,8 @@ AddedComment:
   $ref: ./AddedComment.yaml
 AllThread:
   $ref: ./AllThread.yaml
+DetailThread:
+  $ref: ./DetailThread.yaml
 LoginUser:
   $ref: ./LoginUser.yaml
 RegisterUser:

@@ -54,8 +54,4 @@ async function postThreadHandler(req, res, next) {
   }
 }
 
-module.exports = {
-  getAllThreadHandler: getAllThreadHandler,
-  getThreadHandler: getThreadHandler,
-  postThreadHandler: postThreadHandler
-};
+module.exports = { getAllThreadHandler, getThreadHandler, postThreadHandler };

@@ -1,0 +1,40 @@
+tags:
+  - Thread
+summary: Get detail thread
+description: Get detail thread
+produces:
+  - application/json
+responses:
+  200:
+    description: Thread retrieve successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+            data:
+              type: object
+              properties:
+                threads:
+                  $ref: ../../components/DetailThread.yaml
+        example:
+          status: success
+          data:
+            thread:
+              id: thread-123
+              title: Create REST API
+              body: Express.js
+              date: '2024-06-02T09:02:02.689Z'
+              username: regysaputra
+              comments:
+              - id: comment-lcLjAUHcsAJv-cTFP58p9
+                username: alfian
+                date: '2024-06-12T06:52:43.507Z'
+                content: "**komentar telah dihapus**"
+                replies:
+                - id: reply-FK4WBA2hRaC_GqVwVB4nR
+                  content: my reply
+                  date: '2024-06-15T08:52:04.566Z'
+                  username: alfian

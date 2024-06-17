@@ -13,6 +13,9 @@
     $ref: ./thread/thread-get.yaml
   post:
     $ref: ./thread/thread-post.yaml
+/threads/:threadId:
+  get:
+    $ref: ./thread/detail-thread-get.yaml
 /threads/:threadId/comments:
   post:
     $ref: ./comment/comment-post.yaml
