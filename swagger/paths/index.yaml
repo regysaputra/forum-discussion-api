@@ -1,6 +1,10 @@
 /authentications:
   post:
     $ref: ./authentication/authentication-post.yaml
+  put:
+    $ref: ./authentication/authentication-put.yaml
+  delete:
+    $ref: ./authentication/authentication-delete.yaml
 /users:
   post:
     $ref: ./user/user-post.yaml
@@ -12,6 +16,12 @@
 /threads/:threadId/comments:
   post:
     $ref: ./comment/comment-post.yaml
+/threads/:threadId/comments/:commentId:
+  delete:
+    $ref: ./comment/comment-delete.yaml
 /threads/:threadId/comments/:commentId/replies:
   post:
     $ref: ./reply/reply-post.yaml
+/threads/:threadId/comments/:commentId/replies/:replyId:
+  delete:
+    $ref: ./reply/reply-delete.yaml

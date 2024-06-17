@@ -1,0 +1,37 @@
+tags:
+  - Authentication
+summary: Generate new access token
+description: Generate new access token
+produces:
+  - application/json
+consumes:
+  - application/json
+parameters:
+  - in: body
+    name: body
+    description: refresh token for generate new access token
+    required: true
+    schema:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+responses:
+  200:
+    description: Regenerate access token successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+        example:
+          status: success
+          data:
+            accessToken: access_token

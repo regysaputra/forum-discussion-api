@@ -1,4 +1,5 @@
 const AddCommentUseCase = require("../../../../Applications/use_case/AddCommentUseCase");
+const DeleteCommentUseCase = require("../../../../Applications/use_case/DeleteCommentUseCase");
 const container = require("../../../../Infrastructures/container");
 
 async function postCommentHandler(req, res, next) {
@@ -20,4 +21,22 @@ async function postCommentHandler(req, res, next) {
   }
 }
 
-module.exports = postCommentHandler;
+async function deleteCommentHandler(req, res, next) {
+  const deleteCommentUseCase = container.getInstance(DeleteCommentUseCase.name);
+
+  try {
+    await deleteCommentUseCase.execute(
+      req.params.threadId,
+      req.params.commentId,
+      req.credentials.id
+    );
+
+    res.json({
+      status: 'success'
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { postCommentHandler, deleteCommentHandler };

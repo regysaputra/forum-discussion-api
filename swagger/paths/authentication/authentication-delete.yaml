@@ -1,0 +1,26 @@
+tags:
+  - Authentication
+summary: Delete authentication
+description: Delete authentication
+parameters:
+  - in: body
+    name: body
+    description: refresh token
+    required: true
+    schema:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+responses:
+  200:
+    description: Authentication deleted successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+        example:
+          status: success
