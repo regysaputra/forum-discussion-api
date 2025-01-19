@@ -1,0 +1,18 @@
+type: object
+additionalProperties: false
+properties:
+  id:
+    type: string
+    description: The id of the comment
+    pattern: ^[0-9a-z]+$
+    maxLength: 32
+  content:
+    type: string
+    description: The content of the comment
+    pattern: ^[0-9a-z]+$
+    maxLength: 32
+  owner:
+    type: string
+    description: The owner of the comment
+    pattern: ^[0-9a-z]+$
+    maxLength: 32

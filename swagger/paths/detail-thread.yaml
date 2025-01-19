@@ -1,0 +1,2 @@
+get:
+  $ref: ./thread/detail-thread-get.yaml

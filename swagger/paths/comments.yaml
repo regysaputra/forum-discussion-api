@@ -1,0 +1,2 @@
+post:
+  $ref: ./comment/comment-post.yaml

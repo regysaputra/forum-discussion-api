@@ -1,20 +1,17 @@
 tags:
   - User
-summary: Add new user
+summary: Register
 description: Add new user
-produces:
-  - application/json
-consumes:
-  - application/json
-parameters:
-  - in: body
-    name: body
-    description: Register user object
-    required: true
-    schema:
-      $ref: ../../components/RegisterUser.yaml
+operationId: registerUser
+security: []
+requestBody: 
+  required: true
+  content:
+    application/json: 
+      schema:
+        $ref: ../../schemas/RegisterUser.yaml
 responses:
-  201:
+  '201':
     description: User added successfully
     content:
       application/json:
@@ -27,7 +24,7 @@ responses:
               type: object
               properties:
                 addedUser:
-                  $ref: ../../components/RegisteredUser.yaml
+                  $ref: ../../schemas/RegisteredUser.yaml
         example:
           status: success
           data:
@@ -35,3 +32,21 @@ responses:
               id: user-123
               username: regysaputra
               fullname: Regy Saputra
+  '400':
+    description: Bad Request
+    content:
+      application/json:
+        schema:
+          $ref: ../../schemas/Responses.yaml
+  '429':
+    description: Too Many Requests
+    content:
+      application/json:
+        schema:
+          $ref: ../../schemas/Responses.yaml
+  default:
+    description: Too Many Requests
+    content:
+      application/json:
+        schema:
+          $ref: ../../schemas/Responses.yaml

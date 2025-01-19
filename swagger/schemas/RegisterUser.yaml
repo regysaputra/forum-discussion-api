@@ -1,0 +1,12 @@
+type: object
+additionalProperties: false
+properties:
+  username:
+    type: string
+    description: The username of user
+  password:
+    type: string
+    description: The password of user
+  fullname:
+    type: string
+    description: The fullname of user

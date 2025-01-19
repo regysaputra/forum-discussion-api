@@ -3,16 +3,15 @@
   "info": {
     "title": "Forum API",
     "version": "1.0.0",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/license/mit"
+    },
     "description": "RESTful API for discussion forum app"
   },
-  "server": [
+  "servers": [
     {
-      "url": "http://localhost:3000/",
-      "description": "Development Server"
-    },
-    {
-      "url": "http://forum-discussion-api.vercel.app/",
-      "description": "Production Server"
+      "url": "https://forum-discussion-api.vercel.app"
     }
   ],
   "paths": {
@@ -22,24 +21,19 @@
           "Authentication"
         ],
         "summary": "Login",
-        "description": "Get access token and refresh token",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Login user object",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/LoginUser"
+        "operationId": "getToken",
+        "security": [],
+        "description": "Generate access token and refresh token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUser"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Login successfully",
@@ -73,6 +67,46 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Login failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responses"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responses"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responses"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responses"
+                }
+              }
+            }
           }
         }
       },
@@ -80,28 +114,12 @@
         "tags": [
           "Authentication"
         ],
-        "summary": "Generate new access token",
-        "description": "Generate new access token",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
+        "summary": "Regenerate access token",
+        "description": "Regenerate access token",
+        "operationId": "editToken",
+        "security": [
           {
-            "in": "body",
-            "name": "body",
-            "description": "refresh token for generate new access token",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "refreshToken": {
-                  "type": "string"
-                }
-              }
-            }
+            "bearerAuth": []
           }
         ],
         "responses": {
@@ -133,34 +151,9 @@
                 }
               }
             }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Delete authentication",
-        "description": "Delete authentication",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "refresh token",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "refreshToken": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Authentication deleted successfully",
+          },
+          "401": {
+            "description": "Regenerate access token failed",
             "content": {
               "application/json": {
                 "schema": {
@@ -170,9 +163,57 @@
                       "type": "string"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Delete authentication",
+        "description": "Delete authentication",
+        "operationId": "deleteToken",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authentication deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "pattern": "^[0-9a-z]+$",
+                      "maxLength": 32
+                    }
+                  }
                 },
                 "example": {
                   "status": "success"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Token not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -185,25 +226,20 @@
         "tags": [
           "User"
         ],
-        "summary": "Add new user",
+        "summary": "Register",
         "description": "Add new user",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Register user object",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/RegisterUser"
+        "operationId": "registerUser",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterUser"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "User added successfully",
@@ -219,7 +255,7 @@
                       "type": "object",
                       "properties": {
                         "addedUser": {
-                          "$ref": "#/components/RegisteredUser"
+                          "$ref": "#/components/schemas/RegisteredUser"
                         }
                       }
                     }
@@ -237,6 +273,36 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responses"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responses"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responses"
+                }
+              }
+            }
           }
         }
       }
@@ -247,10 +313,9 @@
           "Thread"
         ],
         "summary": "Get all thread",
-        "description": "Get all thread",
-        "produces": [
-          "application/json"
-        ],
+        "description": "Get all Thread",
+        "operationId": "getAllThread",
+        "security": [],
         "responses": {
           "200": {
             "description": "Threads retrieve successfully",
@@ -266,7 +331,7 @@
                       "type": "object",
                       "properties": {
                         "threads": {
-                          "$ref": "#/components/AllThread"
+                          "$ref": "#/components/schemas/AllThread"
                         }
                       }
                     }
@@ -289,6 +354,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       },
@@ -298,23 +366,17 @@
         ],
         "summary": "Add new thread",
         "description": "Add new thread",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "New thread object",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/AddThread"
+        "operationId": "postThread",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddThread"
+              }
             }
           }
-        ],
+        },
         "security": [
           {
             "bearerAuth": []
@@ -335,7 +397,7 @@
                       "type": "object",
                       "properties": {
                         "addedThread": {
-                          "$ref": "#/components/AddedThread"
+                          "$ref": "#/components/schemas/AddedThread"
                         }
                       }
                     }
@@ -353,19 +415,44 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/threads/:threadId": {
+    "/threads/{threadId}": {
       "get": {
         "tags": [
           "Thread"
         ],
         "summary": "Get detail thread",
         "description": "Get detail thread",
-        "produces": [
-          "application/json"
+        "operationId": "getDetailThread",
+        "security": [],
+        "parameters": [
+          {
+            "name": "threadId",
+            "description": "Thread Id for get detail Thread",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -381,8 +468,8 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "threads": {
-                          "$ref": "#/components/DetailThread"
+                        "thread": {
+                          "$ref": "#/components/schemas/DetailThread"
                         }
                       }
                     }
@@ -418,23 +505,33 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Thread not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/threads/:threadId/comments": {
+    "/threads/{threadId}/comments": {
       "post": {
         "tags": [
           "Comment"
         ],
         "summary": "Add new comment",
         "description": "Add new comment",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
+        "operationId": "postComment",
         "parameters": [
           {
             "in": "path",
@@ -444,15 +541,6 @@
             },
             "required": true,
             "description": "ID of the thread to get"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "New comment object",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/AddComment"
-            }
           }
         ],
         "security": [
@@ -460,6 +548,16 @@
             "bearerAuth": []
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddComment"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Comment added successfully",
@@ -475,7 +573,7 @@
                       "type": "object",
                       "properties": {
                         "addedComment": {
-                          "$ref": "#/components/AddedComment"
+                          "$ref": "#/components/schemas/AddedComment"
                         }
                       }
                     }
@@ -493,17 +591,33 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Thread not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/threads/:threadId/comments/:commentId": {
+    "/threads/{threadId}/comments/{commentId}": {
       "delete": {
         "tags": [
           "Comment"
         ],
         "summary": "Delete comment",
         "description": "Delete comment",
+        "operationId": "deleteComment",
         "parameters": [
           {
             "in": "path",
@@ -547,23 +661,33 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Comment not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/threads/:threadId/comments/:commentId/replies": {
+    "/threads/{threadId}/comments/{commentId}/replies": {
       "post": {
         "tags": [
           "Reply"
         ],
         "summary": "Add new reply",
-        "description": "Add new reply",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
+        "description": "Add new Reply",
+        "operationId": "addReply",
         "parameters": [
           {
             "in": "path",
@@ -582,21 +706,6 @@
             },
             "required": true,
             "description": "ID of the comment to get"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "New reply object",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "content": {
-                  "type": "string",
-                  "description": "The content of the reply"
-                }
-              }
-            }
           }
         ],
         "security": [
@@ -604,6 +713,16 @@
             "bearerAuth": []
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddReply"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Reply added successfully",
@@ -618,22 +737,8 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "addedComment": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string",
-                              "description": "The id of the reply"
-                            },
-                            "content": {
-                              "type": "string",
-                              "description": "The content of the reply"
-                            },
-                            "owner": {
-                              "type": "string",
-                              "description": "The owner of the reply"
-                            }
-                          }
+                        "addedReply": {
+                          "$ref": "#/components/schemas/AddedReply"
                         }
                       }
                     }
@@ -651,17 +756,33 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Thread Not Found / Comment Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/threads/:threadId/comments/:commentId/replies/:replyId": {
+    "/threads/{threadId}/comments/{commentId}/replies/{replyId}": {
       "delete": {
         "tags": [
           "Reply"
         ],
         "summary": "Delete reply",
         "description": "Delete reply",
+        "operationId": "deleteReply",
         "parameters": [
           {
             "in": "path",
@@ -714,6 +835,21 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Thread Not Found / Comment Not Found / Reply Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -722,74 +858,162 @@
   "components": {
     "securitySchemes": {
       "bearerAuth": {
-        "description": "Enter the token with the Bearer prefix, e.g. \"Bearer MJyde36e8\"",
         "type": "apiKey",
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
+        "in": "header",
         "name": "Authorization",
-        "in": "header"
+        "description": "Enter the token with the Bearer prefix, e.g. \"Bearer MJyde36e8\""
       }
     },
-    "AddThread": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string",
-          "description": "The title of the thread"
-        },
-        "body": {
-          "type": "string",
-          "description": "The body of the thread"
-        }
-      }
-    },
-    "AddedThread": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "The id of the thread"
-        },
-        "title": {
-          "type": "string",
-          "description": "The title of the thread"
-        },
-        "owner": {
-          "type": "string",
-          "description": "The owner of the thread"
-        }
-      }
-    },
-    "AddComment": {
-      "type": "object",
-      "properties": {
-        "content": {
-          "type": "string",
-          "description": "The content of the comment"
-        }
-      }
-    },
-    "AddedComment": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "The id of the comment"
-        },
-        "content": {
-          "type": "string",
-          "description": "The content of the comment"
-        },
-        "owner": {
-          "type": "string",
-          "description": "The owner of the comment"
-        }
-      }
-    },
-    "AllThread": {
-      "type": "array",
-      "items": {
+    "schemas": {
+      "LoginUser": {
         "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The username of user"
+          },
+          "password": {
+            "type": "string",
+            "description": "The pasword of user"
+          }
+        }
+      },
+      "Responses": {
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "RegisterUser": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The username of user"
+          },
+          "password": {
+            "type": "string",
+            "description": "The password of user"
+          },
+          "fullname": {
+            "type": "string",
+            "description": "The fullname of user"
+          }
+        }
+      },
+      "RegisteredUser": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of user"
+          },
+          "username": {
+            "type": "string",
+            "description": "The username of user"
+          },
+          "fullname": {
+            "type": "string",
+            "description": "The fullname of user"
+          }
+        }
+      },
+      "AllThread": {
+        "type": "array",
+        "additionalProperties": false,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The id of your thread",
+              "pattern": "^[0-9a-z]+$",
+              "maxLength": 50
+            },
+            "title": {
+              "type": "string",
+              "description": "The title of your thread",
+              "pattern": "^[0-9a-z]+$",
+              "maxLength": 100
+            },
+            "body": {
+              "type": "string",
+              "description": "The body of your body",
+              "pattern": "^[0-9a-z]+$",
+              "maxLength": 500
+            },
+            "date": {
+              "type": "string",
+              "description": "The date of last created/updated your thread",
+              "pattern": "^[0-9a-z]+$",
+              "maxLength": 32
+            },
+            "username": {
+              "type": "string",
+              "description": "The username of your thread",
+              "pattern": "^[0-9a-z]+$",
+              "maxLength": 32
+            },
+            "total_discussion": {
+              "type": "number",
+              "description": "The total comment and reply",
+              "pattern": "^[0-9a-z]+$",
+              "maxLength": 32
+            }
+          }
+        },
+        "maxItems": 100
+      },
+      "AddThread": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The title of the thread",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          },
+          "body": {
+            "type": "string",
+            "description": "The body of the thread",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          }
+        }
+      },
+      "AddedThread": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the thread",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the thread",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          },
+          "owner": {
+            "type": "string",
+            "description": "The owner of the thread",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          }
+        }
+      },
+      "DetailThread": {
+        "type": "object",
+        "additionalProperties": false,
         "properties": {
           "id": {
             "type": "string",
@@ -811,130 +1035,129 @@
             "type": "string",
             "description": "The username of your thread"
           },
-          "total_discussion": {
-            "type": "number",
-            "description": "The total comment and reply"
-          }
-        }
-      }
-    },
-    "DetailThread": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "The id of your thread"
-        },
-        "title": {
-          "type": "string",
-          "description": "The title of your thread"
-        },
-        "body": {
-          "type": "string",
-          "description": "The body of your body"
-        },
-        "date": {
-          "type": "string",
-          "description": "The date of last created/updated your thread"
-        },
-        "username": {
-          "type": "string",
-          "description": "The username of your thread"
-        },
-        "comments": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "The id of the comment"
-              },
-              "username": {
-                "type": "string",
-                "description": "The username of the comment"
-              },
-              "date": {
-                "type": "string",
-                "description": "The date of the comment"
-              },
-              "content": {
-                "type": "string",
-                "description": "The content of the comment"
-              },
-              "replies": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "The id of the reply"
-                    },
-                    "content": {
-                      "type": "string",
-                      "description": "The content of the reply"
-                    },
-                    "date": {
-                      "type": "string",
-                      "description": "The date of the reply"
-                    },
-                    "username": {
-                      "type": "string",
-                      "description": "The username of the reply"
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The id of the comment"
+                },
+                "username": {
+                  "type": "string",
+                  "description": "The username of the comment"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "The date of the comment"
+                },
+                "content": {
+                  "type": "string",
+                  "description": "The content of the comment"
+                },
+                "replies": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The id of the reply"
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the reply"
+                      },
+                      "date": {
+                        "type": "string",
+                        "description": "The date of the reply"
+                      },
+                      "username": {
+                        "type": "string",
+                        "description": "The username of the reply"
+                      }
                     }
-                  }
+                  },
+                  "maxItems": 100
                 }
               }
-            }
+            },
+            "maxItems": 100
           }
         }
-      }
-    },
-    "LoginUser": {
-      "type": "object",
-      "properties": {
-        "username": {
-          "type": "string",
-          "description": "The username of user"
-        },
-        "password": {
-          "type": "string",
-          "description": "The pasword of user"
+      },
+      "AddComment": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "The content of the comment",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          }
         }
-      }
-    },
-    "RegisterUser": {
-      "type": "object",
-      "properties": {
-        "username": {
-          "type": "string",
-          "description": "The username of user"
-        },
-        "password": {
-          "type": "string",
-          "description": "The pasword of user"
-        },
-        "fullname": {
-          "type": "string",
-          "description": "The fullname of user"
+      },
+      "AddedComment": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the comment",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          },
+          "content": {
+            "type": "string",
+            "description": "The content of the comment",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          },
+          "owner": {
+            "type": "string",
+            "description": "The owner of the comment",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          }
         }
-      }
-    },
-    "RegisteredUser": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "The id of user"
-        },
-        "username": {
-          "type": "string",
-          "description": "The username of user"
-        },
-        "fullname": {
-          "type": "string",
-          "description": "The fullname of user"
+      },
+      "AddReply": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "The content of the reply",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          }
+        }
+      },
+      "AddedReply": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the reply",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          },
+          "content": {
+            "type": "string",
+            "description": "The content of the reply",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          },
+          "owner": {
+            "type": "string",
+            "description": "The owner of the reply",
+            "pattern": "^[0-9a-z]+$",
+            "maxLength": 32
+          }
         }
       }
     }

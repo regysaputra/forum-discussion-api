@@ -1,20 +1,17 @@
 tags:
   - Authentication
 summary: Login
-description: Get access token and refresh token
-produces:
-  - application/json
-consumes:
-  - application/json
-parameters:
-  - in: body
-    name: body
-    description: Login user object
-    required: true
-    schema:
-      $ref: ../../components/LoginUser.yaml
+operationId: getToken
+security: []
+description: Generate access token and refresh token
+requestBody:
+  required: true
+  content:
+    application/json: 
+      schema:
+        $ref: ../../schemas/LoginUser.yaml
 responses:
-  200:
+  '200':
     description: Login successfully
     content:
       application/json:
@@ -35,3 +32,27 @@ responses:
           data:
             accessToken: access_token
             refreshToken: refresh_token
+  '401':
+    description: Login failed
+    content:
+      application/json:
+        schema: 
+          $ref: ../../schemas/Responses.yaml
+  '406':
+    description: Not Acceptable
+    content:
+      application/json:
+        schema:
+          $ref: ../../schemas/Responses.yaml
+  '429':
+    description: Too Many Requests
+    content:
+      application/json:
+        schema:
+          $ref: ../../schemas/Responses.yaml
+  default:
+    description: Too Many Requests
+    content:
+      application/json:
+        schema:
+          $ref: ../../schemas/Responses.yaml

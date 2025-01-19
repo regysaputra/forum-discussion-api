@@ -2,6 +2,7 @@ tags:
   - Comment
 summary: Delete comment
 description: Delete comment
+operationId: deleteComment
 parameters:
   - in: path
     name: threadId
@@ -29,3 +30,12 @@ responses:
               type: string
         example:
           status: success
+  404:
+    description: Comment not found
+    content:
+      application/json:
+        schema: 
+          type: object
+          properties:
+            status:
+              type: string

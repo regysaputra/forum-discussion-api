@@ -1,0 +1,22 @@
+AddThread:
+  $ref: AddThread.yaml
+AddedThread:
+  $ref: AddedThread.yaml
+AddComment:
+  $ref: AddComment.yaml
+AddedComment:
+  $ref: AddedComment.yaml
+AllThread:
+  $ref: AllThread.yaml
+DetailThread:
+  $ref: DetailThread.yaml
+LoginUser:
+  $ref: LoginUser.yaml
+RegisterUser:
+  $ref: RegisterUser.yaml
+RegisteredUser:
+  $ref: RegisteredUser.yaml
+AddReply:
+  $ref: AddReply.yaml
+Responses:
+  $ref: Responses.yaml

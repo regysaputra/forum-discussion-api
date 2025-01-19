@@ -1,5 +1,0 @@
-type: object
-properties:
-  content:
-    type: string
-    description: The content of the reply

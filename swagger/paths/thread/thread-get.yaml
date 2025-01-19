@@ -1,9 +1,9 @@
 tags:
   - Thread
 summary: Get all thread
-description: Get all thread
-produces:
-  - application/json
+description: Get all Thread
+operationId: getAllThread
+security: []
 responses:
   200:
     description: Threads retrieve successfully
@@ -18,7 +18,7 @@ responses:
               type: object
               properties:
                 threads:
-                  $ref: ../../components/AllThread.yaml
+                  $ref: ../../schemas/AllThread.yaml
         example:
           status: success
           data:
@@ -29,3 +29,5 @@ responses:
                 date: 2021-08-08T07:19:1
                 username: regysaputra
                 total_discussion: 2
+  400:
+    description: Bad Request

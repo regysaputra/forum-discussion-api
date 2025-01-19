@@ -1,21 +1,10 @@
 tags:
   - Authentication
-summary: Generate new access token
-description: Generate new access token
-produces:
-  - application/json
-consumes:
-  - application/json
-parameters:
-  - in: body
-    name: body
-    description: refresh token for generate new access token
-    required: true
-    schema:
-      type: object
-      properties:
-        refreshToken:
-          type: string
+summary: Regenerate access token
+description: Regenerate access token
+operationId: editToken
+security:
+  - bearerAuth: []
 responses:
   200:
     description: Regenerate access token successfully
@@ -35,3 +24,13 @@ responses:
           status: success
           data:
             accessToken: access_token
+  401:
+    description: Regenerate access token failed
+    content:
+      application/json:
+        schema: 
+          type: object
+          properties:
+            status:
+              type: string
+                

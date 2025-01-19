@@ -1,11 +1,8 @@
 tags:
   - Reply
 summary: Add new reply
-description: Add new reply
-produces:
-  - application/json
-consumes:
-  - application/json
+description: Add new Reply
+operationId: addReply
 parameters:
   - in: path
     name: threadId
@@ -19,14 +16,14 @@ parameters:
       type: string
     required: true
     description: ID of the comment to get
-  - in: body
-    name: body
-    description: New reply object
-    required: true
-    schema:
-      $ref: ../../components/AddReply.yaml
 security:
   - bearerAuth: []
+requestBody: 
+  required: true
+  content:
+    application/json:
+      schema: 
+        $ref: ../../schemas/AddReply.yaml
 responses:
   201:
     description: Reply added successfully
@@ -40,8 +37,8 @@ responses:
             data:
               type: object
               properties:
-                addedComment:
-                  $ref: ../../components/AddedReply.yaml
+                addedReply:
+                  $ref: ../../schemas/AddedReply.yaml
         example:
           status: success
           data:
@@ -49,3 +46,12 @@ responses:
               id: reply-123
               content: my reply
               owner: user-123
+  404:
+    description: Thread Not Found / Comment Not Found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string

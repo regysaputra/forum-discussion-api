@@ -2,6 +2,7 @@ tags:
   - Reply
 summary: Delete reply
 description: Delete reply
+operationId: deleteReply
 parameters:
   - in: path
     name: threadId
@@ -35,3 +36,12 @@ responses:
               type: string
         example:
           status: success
+  404:
+    description: Thread Not Found / Comment Not Found / Reply Not Found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string

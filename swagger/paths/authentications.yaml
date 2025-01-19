@@ -1,0 +1,6 @@
+post:
+  $ref: ./authentication/authentication-post.yaml
+put:
+  $ref: ./authentication/authentication-put.yaml
+delete:
+  $ref: ./authentication/authentication-delete.yaml

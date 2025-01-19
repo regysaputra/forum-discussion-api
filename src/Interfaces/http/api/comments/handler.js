@@ -4,7 +4,6 @@ const container = require("../../../../Infrastructures/container");
 
 async function postCommentHandler(req, res, next) {
   const addCommentUseCase = container.getInstance(AddCommentUseCase.name);
-  console.log("threadId :", req.params.threadId);
 
   try {
     const addedComment = await addCommentUseCase

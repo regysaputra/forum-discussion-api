@@ -1,0 +1,2 @@
+delete:
+  $ref: ./comment/comment-delete.yaml

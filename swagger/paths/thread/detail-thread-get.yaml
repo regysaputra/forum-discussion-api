@@ -2,8 +2,15 @@ tags:
   - Thread
 summary: Get detail thread
 description: Get detail thread
-produces:
-  - application/json
+operationId: getDetailThread
+security: []
+parameters: 
+  - name: threadId
+    description: Thread Id for get detail Thread
+    in: path
+    required: true
+    schema: 
+      type: integer
 responses:
   200:
     description: Thread retrieve successfully
@@ -17,8 +24,8 @@ responses:
             data:
               type: object
               properties:
-                threads:
-                  $ref: ../../components/DetailThread.yaml
+                thread:
+                  $ref: ../../schemas/DetailThread.yaml
         example:
           status: success
           data:
@@ -38,3 +45,12 @@ responses:
                   content: my reply
                   date: '2024-06-15T08:52:04.566Z'
                   username: alfian
+  404:
+    description: Thread not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string

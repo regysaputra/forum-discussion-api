@@ -1,0 +1,2 @@
+post:
+  $ref: ./user/user-post.yaml

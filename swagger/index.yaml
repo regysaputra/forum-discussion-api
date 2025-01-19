@@ -1,14 +1,36 @@
 openapi: "3.0.0"
 info:
-  title: "Forum API"
-  version: "1.0.0"
-  description: "RESTful API for discussion forum app"
-server:
-  - url: http://localhost:3000/
-    description: Development Server
-  - url: http://forum-discussion-api.vercel.app/
-    description: Production Server
+  title: Forum API
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
+  description: RESTful API for discussion forum app
+servers:
+  - url: https://forum-discussion-api.vercel.app
 paths:
-  $ref: ./paths/index.yaml
+  /authentications:
+    $ref: paths/authentications.yaml
+  /users:
+    $ref: paths/users.yaml
+  /threads:
+    $ref: paths/threads.yaml
+  /threads/{threadId}:
+    $ref: paths/detail-thread.yaml
+  /threads/{threadId}/comments:
+    $ref: paths/comments.yaml
+  /threads/{threadId}/comments/{commentId}:
+    $ref: paths/detail-comments.yaml
+  /threads/{threadId}/comments/{commentId}/replies:
+    $ref: paths/replies.yaml
+  /threads/{threadId}/comments/{commentId}/replies/{replyId}:
+    $ref: paths/detail-reply.yaml
 components:
-  $ref: ./components/index.yaml
+  securitySchemes:
+    bearerAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Enter the token with the Bearer prefix, e.g. "Bearer MJyde36e8"
+  schemas:
+    $ref: schemas/index.yaml

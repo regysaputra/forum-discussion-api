@@ -2,17 +2,13 @@ tags:
   - Thread
 summary: Add new thread
 description: Add new thread
-produces:
-  - application/json
-consumes:
-  - application/json
-parameters:
-  - in: body
-    name: body
-    description: New thread object
-    required: true
-    schema:
-      $ref: ../../components/AddThread.yaml
+operationId: postThread
+requestBody: 
+  required: true
+  content:
+    application/json: 
+      schema:
+        $ref: ../../schemas/AddThread.yaml
 security:
   - bearerAuth: []
 responses:
@@ -29,7 +25,7 @@ responses:
               type: object
               properties:
                 addedThread:
-                  $ref: ../../components/AddedThread.yaml
+                  $ref: ../../schemas/AddedThread.yaml
         example:
           status: success
           data:
@@ -37,3 +33,12 @@ responses:
               id: thread-123
               title: Thread Title
               owner: user-123
+  401:
+    description: Unauthorized
+    content:
+      application/json:
+        schema: 
+          type: object
+          properties:
+            status:
+              type: string

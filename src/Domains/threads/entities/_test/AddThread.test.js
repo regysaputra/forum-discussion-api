@@ -18,6 +18,7 @@ describe('AddThread entities', () => {
     const payload = {
       title: 123,
       body: 'content',
+      keyword: ''
     };
 
     const userid = 'user-123';

@@ -16,7 +16,7 @@
 		"test:domains": "jest --setupFiles dotenv/config --testPathPattern=src/Domains/ -i",
 		"test:repository": "jest --setupFiles dotenv/config --testPathPattern=src/Infrastructures/repository -i",
 		"test:http": "jest --setupFiles dotenv/config --testPathPattern=src/Infrastructures/http -i",
-		"doc": "swagger-cli bundle swagger/index.yaml --outfile swagger/index.json"
+		"doc": "redocly bundle swagger/index.yaml --output swagger/index.json"
 	},
 	"repository": {
 		"type": "git",

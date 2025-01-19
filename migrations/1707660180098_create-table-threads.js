@@ -16,6 +16,14 @@ exports.up = (pgm) => {
       type: 'TEXT',
       notNull: true,
     },
+    thread_keyword: {
+      type: 'TEXT[]',
+      notNull: true,
+    },
+    thread_view: {
+      type: 'INTEGER',
+      default: 0,
+    },
     thread_date: {
       type: 'TIMESTAMP',
       default: pgm.func('CURRENT_TIMESTAMP'),

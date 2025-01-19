@@ -1,0 +1,8 @@
+type: object
+additionalProperties: false
+properties:
+  content:
+    type: string
+    description: The content of the comment
+    pattern: ^[0-9a-z]+$
+    maxLength: 32

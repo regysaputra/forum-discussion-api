@@ -1,8 +1,0 @@
-type: object
-properties:
-  title:
-    type: string
-    description: The title of the thread
-  body:
-    type: string
-    description: The body of the thread

@@ -1,0 +1,18 @@
+type: object
+additionalProperties: false
+properties:
+  id:
+    type: string
+    description: The id of the thread
+    pattern: ^[0-9a-z]+$
+    maxLength: 32
+  title:
+    type: string
+    description: The title of the thread
+    pattern: ^[0-9a-z]+$
+    maxLength: 32
+  owner:
+    type: string
+    description: The owner of the thread
+    pattern: ^[0-9a-z]+$
+    maxLength: 32

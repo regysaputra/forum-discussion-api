@@ -1,0 +1,4 @@
+get:
+  $ref: ./thread/thread-get.yaml
+post:
+  $ref: ./thread/thread-post.yaml

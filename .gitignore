@@ -4,3 +4,4 @@ coverage
 .development.env
 .test.env
 debug.log
+.idea

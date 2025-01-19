@@ -2,10 +2,7 @@ tags:
   - Comment
 summary: Add new comment
 description: Add new comment
-produces:
-  - application/json
-consumes:
-  - application/json
+operationId: postComment
 parameters:
   - in: path
     name: threadId
@@ -13,14 +10,14 @@ parameters:
       type: string
     required: true
     description: ID of the thread to get
-  - in: body
-    name: body
-    description: New comment object
-    required: true
-    schema:
-      $ref: ../../components/AddComment.yaml
 security:
   - bearerAuth: []
+requestBody: 
+  required: true
+  content:
+    application/json: 
+      schema:
+        $ref: ../../schemas/AddComment.yaml
 responses:
   201:
     description: Comment added successfully
@@ -35,7 +32,7 @@ responses:
               type: object
               properties:
                 addedComment:
-                  $ref: ../../components/AddedComment.yaml
+                  $ref: ../../schemas/AddedComment.yaml
         example:
           status: success
           data:
@@ -43,3 +40,12 @@ responses:
               id: comment-123
               content: my comment
               owner: user-123
+  404:
+    description: Thread not found
+    content:
+      application/json:
+        schema: 
+          type: object
+          properties:
+            status:
+              type: string
